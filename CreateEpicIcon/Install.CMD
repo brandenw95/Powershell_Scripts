@@ -1,0 +1,1 @@
+powershell.exe -ExecutionPolicy Bypass -WindowStyle hidden -File EpicBrowserShortcut.ps1
