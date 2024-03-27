@@ -1,22 +1,12 @@
 # PowerShell Scripts
 
-Welcome to the repository containing various PowerShell scripts. This repository is designed to provide a collection of scripts for automating tasks, simplifying workflows, and enhancing productivity within a Windows environment.
+This repository is designed to provide a collection of scripts for automating tasks, simplifying workflows, and enhancing productivity within a Windows environment.
 
 ## Table of Contents
 
-- [Scripts](#scripts)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
-
-## Scripts
-
-Here's a brief overview of the scripts available in this repository:
-
-1. **ScriptName.ps1**: Description of what this script does.
-2. **ScriptName2.ps1**: Description of what this script does.
-
-Feel free to explore each script to understand its purpose and how it can be utilized.
 
 ## Usage
 
@@ -40,4 +30,4 @@ Thank you for helping to improve this repository and make it a valuable resource
 
 ## License
 
-This repository is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the scripts as needed, but please retain the original license file and attribute the authors appropriately.
+This repository is licensed under the MIT License. Feel free to use, modify, and distribute the scripts as needed, but please retain the original license file and attribute the authors appropriately.
