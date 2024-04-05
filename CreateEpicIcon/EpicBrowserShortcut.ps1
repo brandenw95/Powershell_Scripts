@@ -1,16 +1,28 @@
 # Author: Branden Walter
 # Date: March 21st 2024
 # ========================
-# Description: Checks to see if the folowing is installed and desktop icons exist, if not then create desktop icons.
+# Description: Checks to see if the following is installed and desktop icons exist, if not then create desktop icons.
 #              - Applied Epic Browser
 # ========================
 
+
+function downloadIcon{
+
+    $headers = @{"User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"}
+    $url = "https://www.seafirstinsurance.com/wp-content/uploads/2024/03/EpicBrowser.ico"
+    $directoryPath = "C:\temp"
+    $outputDirectory = "C:\temp\EpicBrowser.ico"
+
+    if (-not (Test-Path $directoryPath)) {
+        New-Item -Path $directoryPath -ItemType Directory -Force
+    } else {
+        Write-Host "Directory already exists: $directoryPath" > $null
+    }
+    Invoke-WebRequest -Uri $url -Headers $headers -OutFile $outputDirectory
+}
 function CreateEpicShortcut {
 
-    #Icon Copy to C and use as icon.
-    $iconPath = "$PSScriptRoot\EpicBrowser.ico"
-    Copy-Item -Path $iconPath -Destination $iconDestination -Force
-    $finalIconPath = "C:\EpicBrowser.ico"
+    $finalIconPath = "C:\temp\EpicBrowser.ico"
     $target = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
     $startIn = "C:\Program Files (x86)\Microsoft\Edge\Application"
     $shortcutPath = "$([System.Environment]::GetFolderPath('CommonDesktopDirectory'))\Applied Epic Browser.lnk"
@@ -21,25 +33,20 @@ function CreateEpicShortcut {
     $shortcut.WorkingDirectory = $startIn
     $shortcut.IconLocation = $finalIconPath
     $shortcut.Save()
-
     Write-Host "Icon Saved to Desktop"
     exit 0
 }
 
 function Main {
 
-    # Initial move of the icon for detection purposes
-    $iconDestination = "C:\"
-    $iconPathInit = "$PSScriptRoot\EpicBrowser.ico"
-    Copy-Item -Path $iconPathInit -Destination $iconDestination -Force
-
-    # If the SHortcut does not exist on the desktop create shortcut
+    downloadIcon
+    # If the Shortcut does not exist on the desktop create shortcut
     $IconPath = "$([System.Environment]::GetFolderPath('CommonDesktopDirectory'))\Applied Epic Browser.lnk"
     if (!(Test-Path $IconPath)) {
         CreateEpicShortcut
     }
     else{
-        Write-Host "Icon Already on desktop"
+        Write-Host "Icon Already on Desktop"
         exit 0 
     }
 }
