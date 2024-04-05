@@ -6,7 +6,7 @@
 # ========================
 
 $WallpaperURL = "https://www.seafirstinsurance.com/wp-content/uploads/2024/01/SFI-Navacord-Desktop-Background.jpg"
-$LockscreenUrl = "https://www.seafirstinsurance.com/wp-content/uploads/2024/01/SFI-Navacord-Desktop-Background.jpg"
+$LockscreenUrl = "https://www.seafirstinsurance.com/wp-content/uploads/2024/04/SFI-Navacord-Desktop-Background-Black_V2.jpg"
 $ImageDestinationFolder = "c:\Intune\Pictures"
 $WallpaperDestinationFile = "$ImageDestinationFolder\wallpaperV1.jpg"
 $LockScreenDestinationFile = "$ImageDestinationFolder\LockScreenV1.jpg"
