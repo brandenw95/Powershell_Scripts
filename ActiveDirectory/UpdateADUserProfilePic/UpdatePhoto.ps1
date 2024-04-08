@@ -14,9 +14,10 @@
 function UpdateUserProfilePicture{
     param (
         [Parameter]
-        [Microsoft.ActiveDirectory.Management.ADUser] $User
+        [System.Object[]] $user
+        
     )
-    
+    #[Microsoft.ActiveDirectory.Management.ADUser] $user-one
     $scriptDirectory = $PSScriptRoot
     $imagePath = Join-Path -Path $scriptDirectory -ChildPath "profile2024.png"
     $profilePicture = [System.IO.File]::ReadAllBytes($imagePath)
@@ -59,10 +60,11 @@ function Main {
 
     $users = $testUsers
     #$users = Get-ADUser -Filter *
+    Write-Output "Type of myVariable: $($users.GetType())"
     
     foreach ($user in $users) {
         
-        UpdateUserProfilePicture $user
+        UpdateUserProfilePicture -user $users
     }
 }
 
