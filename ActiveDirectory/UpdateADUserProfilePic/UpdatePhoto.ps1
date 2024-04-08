@@ -18,7 +18,7 @@ function UpdateUserProfilePicture{
     )
     
     $scriptDirectory = $PSScriptRoot
-    $imagePath = Join-Path -Path $scriptDirectory -ChildPath "seafirst.jpg"
+    $imagePath = Join-Path -Path $scriptDirectory -ChildPath "profile2024.png"
     $profilePicture = [System.IO.File]::ReadAllBytes($imagePath)
 
     # If the user's profile picture attribute is empty or not set, update it
