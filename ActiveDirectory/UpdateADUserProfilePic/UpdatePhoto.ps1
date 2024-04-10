@@ -14,18 +14,18 @@
 function UpdateUserProfilePicture{
     param (
         [Parameter]
-        [System.Object[]] $user
+        [Microsoft.ActiveDirectory.Management.ADUser] $user
         
     )
-    #[Microsoft.ActiveDirectory.Management.ADUser] $user-one
+    
     $scriptDirectory = $PSScriptRoot
     $imagePath = Join-Path -Path $scriptDirectory -ChildPath "profile2024.png"
     $profilePicture = [System.IO.File]::ReadAllBytes($imagePath)
 
-    # If the user's profile picture attribute is empty or not set, update it
+    # If the user's profile picture attribute is empty or not set, update it.
     if (-not $user.thumbnailPhoto) {
 
-        Set-ADUser -Identity $user -Replace @{thumbnailPhoto=$profilePicture}
+        Set-ADUser -Identity $user -Replace @{thumbnailPhoto=$profilePicture} -WhatIf
         Write-Host "Profile picture added for $($user.Name)"
     }
     else {
@@ -40,27 +40,7 @@ function init_warning {
 }
 function Main {
 
-
-
-    # Test User 1
-    $testUser1 = New-Object PSObject -Property @{
-        Name = "John Doe"
-        # No thumbnail photo
-        thumbnailPhoto = $null 
-    }
-
-    #Test User 2
-    $testUser2 = New-Object PSObject -Property @{
-        Name = "Jane Smith"
-        # Existing thumbnail photo
-        thumbnailPhoto = [byte[]]@(1, 2, 3) 
-    }
-
-    $testUsers = @($testUser1, $testUser2)
-
-    $users = $testUsers
-    #$users = Get-ADUser -Filter *
-    Write-Output "Type of myVariable: $($users.GetType())"
+    $users = Get-ADUser -Filter *
     
     foreach ($user in $users) {
         
