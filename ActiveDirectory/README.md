@@ -1,1 +1,0 @@
-# All active Directory scripts go here
