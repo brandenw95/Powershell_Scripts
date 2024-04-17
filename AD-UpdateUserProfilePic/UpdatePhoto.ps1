@@ -11,41 +11,28 @@
 #
 # ========================
 
-function UpdateUserProfilePicture{
-    param (
-        [Parameter]
-        [Microsoft.ActiveDirectory.Management.ADUser] $user
-        
-    )
+#Users that already have profile pictures set 
+$emailsToSkip = @(
+    "email1@email.com",
+    "email2@email.com"
+)
+
+
+$allUsers = Get-ADUser -Filter * -Properties SamAccountName, UserPrincipalName
+$photo = [byte[]](Get-Content "C:\Temp\profile2024.png" -Encoding byte)
+
+foreach ($user in $allUsers) {
+
+    $upn = $user.UserPrincipalName
+    $sam = $user.SamAccountName
     
-    $scriptDirectory = $PSScriptRoot
-    $imagePath = Join-Path -Path $scriptDirectory -ChildPath "profile2024.png"
-    $profilePicture = [System.IO.File]::ReadAllBytes($imagePath)
-
-    # If the user's profile picture attribute is empty or not set, update it.
-    if (-not $user.thumbnailPhoto) {
-
-        Set-ADUser -Identity $user -Replace @{thumbnailPhoto=$profilePicture} -WhatIf
-        Write-Host "Profile picture added for $($user.Name)"
+    if ($upn -and $emailsToSkip -notcontains $upn) {
+        Set-ADUser -Identity $sam -Replace @{thumbnailPhoto=$photo}
+        Write-Host "User $($sam) has been updated"
     }
-    else {
-        Write-Host "Profile picture already exists for $($user.Name)"
-    }
-}
-function init_warning {
-    Write-Output "!!Important!!"
-    Write-Output "Image must adhere to the following spec:"
-    Write-Output "- Less than 100kb in file size"
-    Write-Output "- Must be 96 x 96 pixels"
-}
-function Main {
-
-    $users = Get-ADUser -Filter *
+    else{
     
-    foreach ($user in $users) {
-        
-        UpdateUserProfilePicture -user $users
+        Write-Host "SKIPPED: $upn"
+
     }
 }
-
-Main
