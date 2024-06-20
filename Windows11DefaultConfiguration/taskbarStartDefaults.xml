@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LayoutModificationTemplate
+    xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"
+    xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout"
+    xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout"
+    xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"
+    Version="1">
+
+  <!-- Set taskbar alignment to left -->
+  <LayoutOptions StartTileGroupCellWidth="6" TaskbarAlignment="Left" />
+
+  <!-- Custom taskbar layout collection with pinned items -->
+  <CustomTaskbarLayoutCollection PinListPlacement="Replace">
+    <defaultlayout:TaskbarLayout>
+      <taskbar:TaskbarPinList>
+        <!-- Pin File Explorer -->
+        <taskbar:DesktopApp DesktopApplicationID="Microsoft.Windows.Explorer"/>
+        
+        <!-- Pin Microsoft Outlook -->
+        <taskbar:DesktopApp DesktopApplicationLinkPath="%ProgramFiles%\Microsoft Office\root\Office16\OUTLOOK.EXE"/>
+        
+        <!-- Pin Epic Web Link -->
+        <taskbar:DesktopApp DesktopApplicationLinkPath="C:\Users\Public\Applied Epic Browser.lnk"/>
+        
+        <!-- Pin Microsoft Teams -->
+        <taskbar:DesktopApp DesktopApplicationLinkPath="%ProgramFiles(x86)%\Microsoft\Teams\current\Teams.exe"/>
+        
+        <!-- Pin Microsoft Edge -->
+        <taskbar:DesktopApp DesktopApplicationID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge"/>
+        
+        <!-- Pin 1Password -->
+        <taskbar:DesktopApp DesktopApplicationLinkPath="%ProgramFiles%\1Password\1Password.exe"/>
+      </taskbar:TaskbarPinList>
+    </defaultlayout:TaskbarLayout>
+  </CustomTaskbarLayoutCollection>
+
+  <!-- Disable Weather/Stocks app -->
+  <start:StartLayoutCollection>
+    <start:Group Name="DisabledApps">
+      <start:Tile Size="2x2" AppUserModelID="Microsoft.Windows.Weather_8wekyb3d8bbwe!App"/>
+    </start:Group>
+  </start:StartLayoutCollection>
+</LayoutModificationTemplate>
