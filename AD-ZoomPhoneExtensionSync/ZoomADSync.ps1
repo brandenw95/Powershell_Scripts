@@ -1,89 +1,48 @@
-# Zoom API credentials
-$zoomClientId = "your_zoom_client_id"
-$zoomClientSecret = "your_zoom_client_secret"
 
-function Get-ZoomOAuthToken {
-    param (
-        [string]$clientId,
-        [string]$clientSecret
-    )
+# Author: Branden Walter
+# Date: June 21st 2024
+# ========================
+# Description: Updates all user in Active Directory with the extension numbers generated in Zoom.
+# ========================
 
-    $uri = "https://zoom.us/oauth/token?grant_type=client_credentials"
-    $authHeader = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$(clientId):$clientSecret"))
+$ACCOUNT_ID = $env:ZOOM_ACCOUNT_ID
+$CLIENT_ID = $env:ZOOM_CLIENT_ID
+$CLIENT_SECRET = $env:ZOOM_CLIENT_SECRET
 
-    $response = Invoke-RestMethod -Uri $uri -Method Post -Headers @{
-        Authorization = "Basic $authHeader"
-    }
+function ZoomIsInstalled {
 
-    return $response.access_token
-}
+    """ Check to see if the module is installed, if not install it. """
 
-function Get-ZoomUserPhoneExtension {
-    param (
-        [string]$email,
-        [string]$accessToken
-    )
-
-    $url = "https://api.zoom.us/v2/users/$email"
-
-    # Make the API request
-    $response = Invoke-RestMethod -Uri $url -Method Get -Headers @{
-        Authorization = "Bearer $accessToken"
-    }
-
-    return $response.phone_numbers[0].number  # Assuming the first phone number is the extension
-}
-
-function Update-ADUserPhoneExtension {
-    param (
-        [string]$email,
-        [string]$extension
-    )
-
-    # Find the user in Active Directory by email
-    $user = Get-ADUser -Filter {EmailAddress -eq $email}
-
-    if ($user) {
-        # Update the phone extension attribute
-        Set-ADUser -Identity $user -OfficePhone $extension
-        Write-Output "Updated user $($user.SamAccountName) with extension $extension"
+    if (-not (Get-Module -ListAvailable -Name PSZoom)) {
+        Write-Output "PSZoom module not found. Installing PSZoom module..."
+        Install-Module -Name PSZoom -Force -Scope CurrentUser
     } else {
-        Write-Error "User with email $email not found in Active Directory"
+        Write-Output "PSZoom module is already installed."
     }
 }
-
-function Start-ADSync {
-    # Start the AD delta sync process
-    Start-ADSyncSyncCycle -PolicyType Delta
-    Write-Output "Started AD delta sync"
-}
-
 function Main {
-    # Get OAuth token from Zoom API
-    $accessToken = Get-ZoomOAuthToken -clientId $zoomClientId -clientSecret $zoomClientSecret
 
-    if ($accessToken) {
-        # Get all user emails from Active Directory
-        $users = Get-ADUser -Filter * -Property EmailAddress | Where-Object { $null -ne $_.EmailAddress }
+    """ Grab All Users in AD, Find thier extension in Zoom and then update thier ZipCode AD attribute"""
+    
+    Import-Module ActiveDirectory
+    Import-Module PSZoom
 
-        foreach ($user in $users) {
-            $email = $user.EmailAddress
+    Connect-PSZoom -AccountID $ACCOUNT_ID -ClientID $CLIENT_ID -ClientSecret $CLIENT_SECRET
+    $users = Get-ADUser -Filter * -Property UserPrincipalName
 
-            # Get phone extension from Zoom API
-            $extension = Get-ZoomUserPhoneExtension -email $email -accessToken $accessToken
-
-            if ($extension) {
-                # Update the user's extension in Active Directory
-                Update-ADUserPhoneExtension -email $email -extension $extension
-            } else {
-                Write-Error "Failed to retrieve phone extension for email $email from Zoom"
-            }
+    foreach ($user in $users) {
+        
+        $upn = $user.UserPrincipalName
+        $zoomPhoneUser = Get-ZoomPhoneUser -UserID $upn
+        $extensionNumber = $zoomPhoneUser.extension_number
+        
+        if ($extensionNumber) {
+            Set-ADUser -Identity $user -PostalCode $extensionNumber -WhatIf
+            Write-Output "Updated user $upn with extension number $extensionNumber"
+        } 
+        else {
+            Write-Output "No extension number found for user $upn"
         }
-
-        # Perform AD delta sync
-        Start-ADSync
-    } else {
-        Write-Error "Failed to obtain OAuth token from Zoom"
     }
 }
 Main
