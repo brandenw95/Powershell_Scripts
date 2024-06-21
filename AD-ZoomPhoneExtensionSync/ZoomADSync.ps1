@@ -19,30 +19,37 @@ function ZoomIsInstalled {
     } else {
         Write-Output "PSZoom module is already installed."
     }
+    
+    Import-Module ActiveDirectory
+    Import-Module PSZoom
 }
 function Main {
 
     """ Grab All Users in AD, Find thier extension in Zoom and then update thier ZipCode AD attribute"""
-    
-    Import-Module ActiveDirectory
-    Import-Module PSZoom
 
+    # Uncomment the below function when running for the first time.
+    #ZoomIsInstalled
+    
     Connect-PSZoom -AccountID $ACCOUNT_ID -ClientID $CLIENT_ID -ClientSecret $CLIENT_SECRET
     $users = Get-ADUser -Filter * -Property UserPrincipalName
 
     foreach ($user in $users) {
         
+        #Start-Sleep -Seconds 1
         $upn = $user.UserPrincipalName
-        $zoomPhoneUser = Get-ZoomPhoneUser -UserID $upn
-        $extensionNumber = $zoomPhoneUser.extension_number
+        try{
+            $zoomPhoneUser = Get-ZoomPhoneUser -UserID $upn
+            $extensionNumber = $zoomPhoneUser.extension_number
         
-        if ($extensionNumber) {
-            Set-ADUser -Identity $user -PostalCode $extensionNumber -WhatIf
-            Write-Output "Updated user $upn with extension number $extensionNumber"
-        } 
-        else {
-            Write-Output "No extension number found for user $upn"
+            if ($extensionNumber) {
+                Set-ADUser -Identity $user -PostalCode $extensionNumber -WhatIf
+                Write-Output "Updated user $upn with extension number $extensionNumber"
+            } 
+            else {
+                Write-Output "No extension number found for user $upn"
+            }
         }
+        catch{ }
     }
 }
 Main
