@@ -11,7 +11,7 @@ $CLIENT_SECRET = $env:ZOOM_CLIENT_SECRET
 
 function ZoomIsInstalled {
 
-    """ Check to see if the module is installed, if not install it. """
+    <# Check to see if the module is installed, if not install it. #>
 
     if (-not (Get-Module -ListAvailable -Name PSZoom)) {
         Write-Output "PSZoom module not found. Installing PSZoom module..."
@@ -25,7 +25,7 @@ function ZoomIsInstalled {
 }
 function Main {
 
-    """ Grab All Users in AD, Find thier extension in Zoom and then update thier ZipCode AD attribute"""
+    <# Grab All Users in AD, Find thier extension in Zoom and then update thier ZipCode AD attribute #>
 
     # Uncomment the below function when running for the first time.
     #ZoomIsInstalled
@@ -35,6 +35,7 @@ function Main {
 
     foreach ($user in $users) {
         
+        # Uncomment this to slow down the API calls
         #Start-Sleep -Seconds 1
         $upn = $user.UserPrincipalName
         try{
@@ -51,5 +52,8 @@ function Main {
         }
         catch{ }
     }
+
+    Start-adsyncsynccycle -policytype delta
+    exit 0
 }
 Main
