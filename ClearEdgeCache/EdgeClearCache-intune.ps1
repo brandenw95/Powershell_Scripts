@@ -3,6 +3,10 @@
 # ========================
 # Description: Clears Microsft Edge's cache.
 # ========================
+
+$historyPath =  "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\History"
+
+$cachePath =  "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\Cache"
 function ClearCache{
     param(
         [String]$edgePath
@@ -23,7 +27,7 @@ function ClearCache{
 function Main {
     
     $appDataPath = [System.Environment]::GetFolderPath('LocalApplicationData')
-    $edgePath = Join-Path -Path $appDataPath -ChildPath 'Microsoft\Edge\User Data\Default'
+    $edgePath = Join-Path -Path $appDataPath -ChildPath 'Microsoft\Edge\User Data\Default\History'
     ClearCache -edgePath $edgePath
 }
 Main
