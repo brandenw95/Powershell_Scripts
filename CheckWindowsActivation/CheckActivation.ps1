@@ -1,3 +1,9 @@
+# Author: Branden Walter
+# Date: March 27th 2024
+# ========================
+# Description: Checks activation of windows devices.
+# ========================
+
 function Main{
     
     $outputFile = "C:\temp\slmgr_output.txt"
@@ -9,5 +15,4 @@ function Main{
     
     Remove-Item -Path $outputFile
 }
-
 Main

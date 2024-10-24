@@ -1,4 +1,8 @@
-
+# Author: Branden Walter
+# Date: April 26th 2024
+# ========================
+# Description: Detects the teams desktop icon.
+# ========================
 function Main {
 
     $IconPath = "$([System.Environment]::GetFolderPath('CommonDesktopDirectory'))\Microsoft Teams.lnk"

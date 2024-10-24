@@ -1,4 +1,8 @@
-
+# Author: Branden Walter
+# Date: April 26th 2024
+# ========================
+# Description: Installs the 64 bit version of adobe.
+# ========================
 
 function Write-Log {
     param(

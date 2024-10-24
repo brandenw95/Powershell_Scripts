@@ -1,3 +1,9 @@
+# Author: Branden Walter
+# Date: April 26th 2024
+# ========================
+# Description: Updates Windows
+# ========================
+
 Function WSUSUpdate {
 	$Criteria = "IsInstalled=0 and Type='Software'"
 	$Searcher = New-Object -ComObject Microsoft.Update.Searcher

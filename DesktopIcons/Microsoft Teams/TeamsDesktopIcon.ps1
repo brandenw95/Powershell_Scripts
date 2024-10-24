@@ -1,3 +1,9 @@
+# Author: Branden Walter
+# Date: April 26th 2024
+# ========================
+# Description: Places Teams Icon on the desktop.
+# ========================
+
 function Main {
 
     $target = "C:\Users\Public\Desktop\Microsoft Teams.lnk"

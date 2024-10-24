@@ -1,3 +1,8 @@
+# Author: Branden Walter
+# Date: March 27th 2024
+# ========================
+# Description: Detection script for Telus Business connect.
+# ========================
 
 function Main {
     $installPath = "C:\Users\$env:username\AppData\Local\Programs\TELUSBusinessConnect"
@@ -11,5 +16,4 @@ function Main {
         exit 0
     }
 }
-    
 Main

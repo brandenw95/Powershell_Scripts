@@ -12,13 +12,15 @@
 #               3 - Invalid Parameter - Indicates invalid parameters provided to the script.
 #
 #=========================
-API_KEY = "API KEY"
-AZURETHUMBPRINT = "Thumb print Key "
+$API_KEY = "API KEY"
+$AZURETHUMBPRINT = "Thumb print Key "
+$APP_ID = "3e60bdcf-5ace-4280-81e6-754cdaac10e9"
+$ORGANIZATION = "seafirstinsurance.onmicrosoft.com"
 function APIGetDataBambooHR{
 
     # Authenticate, Query the API and return all Out of Office data
     $headers=@{}
-    $authentication_api = API_KEY
+    $authentication_api = $API_KEY
     $headers.Add("Accept", "application/json")
     $headers.Add("authorization", "Basic $authentication_api")
     $response = Invoke-WebRequest -Uri 'https://api.bamboohr.com/api/gateway.php/seafirstinsurance/v1/time_off/whos_out/' -UseBasicParsing -Method GET -Headers $headers
@@ -88,7 +90,7 @@ function Main{
 
 
     # Connect to Exchange Online and set a session
-    $session = Connect-ExchangeOnline -CertificateThumbPrint AZURETHUMBPRINT -AppID "3e60bdcf-5ace-4280-81e6-754cdaac10e9" -Organization "seafirstinsurance.onmicrosoft.com"
+    $session = Connect-ExchangeOnline -CertificateThumbPrint $AZURETHUMBPRINT -AppID $APP_ID -Organization $ORGANIZATION
     
     $TimeOffObject = APIGetDataBambooHR
 

@@ -38,10 +38,10 @@
 
 <#
     .SYNOPSIS
-    SeaFirst Insurance User Updater
+    User Updater
 
     .DESCRIPTION
-    This script is used to update various attributes of user records in the SeaFirst Insurance Active Directory, including Department, Job Title, Work Phone number, and Reports to.
+    This script is used to update various attributes of user records in the Active Directory, including Department, Job Title, Work Phone number, and Reports to.
 
     .PARAMETER userEmail
     Specifies the email of the user whose record needs to be updated.
@@ -77,7 +77,7 @@ function singleUpdate{
 
     # If an email is given in the parameter then it is used for updating in bulk
     if (-not $userEmail) {
-        $userEmail = Read-Host "Please enter the email of the user (ex. dhill@seafirstinsurance.com)"
+        $userEmail = Read-Host "Please enter the email of the user"
     }
     
     # Authenticate, Query the API and return entire directory and report to.
@@ -266,10 +266,6 @@ function bulkUpdate{
         Start-adsyncsynccycle -policytype delta
     }
     elseif ($debug -eq "True") {
-
-        #Create a simple Test array with vaild emails
-        $MultiUserEmailAddressArray = @("bwagar@seafirstinsurance.com", 
-                                        "dhill@seafirstinsurance.com") 
         
         $DebugCounter = 0
     

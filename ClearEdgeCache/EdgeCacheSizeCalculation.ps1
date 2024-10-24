@@ -1,4 +1,8 @@
-
+# Author: Branden Walter
+# Date: March 27th 2024
+# ========================
+# Description: Reports the cache size of edge for Intune
+# ========================
 function Main{
     $cachePath = "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\Cache"
 

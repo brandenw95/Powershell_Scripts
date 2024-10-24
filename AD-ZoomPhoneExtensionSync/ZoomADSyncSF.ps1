@@ -11,8 +11,6 @@ $CLIENT_SECRET = $env:ZOOM_CLIENT_SECRET
 
 function ZoomIsInstalled {
 
-    <# Check to see if the module is installed, if not install it. #>
-
     if (-not (Get-Module -ListAvailable -Name PSZoom)) {
         Write-Output "PSZoom module not found. Installing PSZoom module..."
         Install-Module -Name PSZoom -Force -Scope CurrentUser
@@ -24,8 +22,6 @@ function ZoomIsInstalled {
     Import-Module PSZoom
 }
 function Main {
-
-    <# Grab All Users in AD, Find thier extension in Zoom and then update thier ZipCode AD attribute #>
 
     # Uncomment the below function when running for the first time.
     #ZoomIsInstalled

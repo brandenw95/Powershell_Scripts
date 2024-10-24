@@ -4,7 +4,14 @@
 # Description: Script to remove specified .lnk files from Desktops
 # ========================
 
-$filesToDelete = @("VLC media player.lnk", "Acrobat Reader.lnk", "Google Chrome.lnk", "DemoOCX32.lnk", "DemoOCX64.lnk", "WinRAR.lnk") # Add more filenames as needed
+function Main{
+    $filesToDelete = @("VLC media player.lnk", 
+                   "Acrobat Reader.lnk", 
+                   "Google Chrome.lnk", 
+                   "DemoOCX32.lnk", 
+                   "DemoOCX64.lnk", 
+                   "WinRAR.lnk"
+                   ) # Add more filenames as needed
 
 
 $userDesktop = [System.Environment]::GetFolderPath("Desktop")
@@ -35,3 +42,5 @@ DeleteFiles -path $publicDesktop
 $error.clear()
 Write-Host "Desktop Cleaned up Successfully"
 exit 0
+}
+Main

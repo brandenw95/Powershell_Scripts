@@ -1,4 +1,9 @@
-function main{
+# Author: Branden Walter
+# Date: April 26th 2024
+# ========================
+# Description: Detects the install of adobe 32 bit
+# ========================
+function Main{
 
     $guid = "{AC76BA86-7AD7-1033-7B44-AC0F074E4100}"
     $filePath = "C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRD32.exe"
@@ -14,4 +19,4 @@ function main{
         exit 0
     }
 }
-main
+Main

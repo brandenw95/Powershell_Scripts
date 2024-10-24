@@ -1,3 +1,8 @@
+# Author: Branden Walter
+# Date: March 27th 2024
+# ========================
+# Description: Direct Uninstaller for Telus Business connect.
+# ========================
 
 function Main {
     $userprofile = [Environment]::UserName
@@ -10,5 +15,4 @@ function Main {
         exit 0
     } 
 }
-    
 Main

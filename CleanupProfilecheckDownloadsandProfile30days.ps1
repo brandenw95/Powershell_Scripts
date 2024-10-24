@@ -1,3 +1,9 @@
+# Author: Branden Walter
+# Date: April 26th 2024
+# ========================
+# Description: Cleans up profiels older than 30 days.
+# ========================
+
 function Write-Log {
     param(
         [Parameter(Mandatory = $true)]

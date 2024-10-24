@@ -1,4 +1,8 @@
-
+# Author: Branden Walter
+# Date: April 26th 2024
+# ========================
+# Description: Detects the install of the 1password Icon.
+# ========================
 function Main {
 
     # If the Shortcut does not exist on the desktop create or it is not installed 

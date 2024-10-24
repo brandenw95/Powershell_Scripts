@@ -1,4 +1,9 @@
-function main {
+# Author: Branden Walter
+# Date: March 27th 2024
+# ========================
+# Description: Searches the computer for Telus Business connect installer and removes it.
+# ========================
+function Main {
     $uninstallFileName = "Uninstall TELUS Business Connect.exe"
     $currentUserAppData = [Environment]::GetFolderPath([Environment+SpecialFolder]::ApplicationData)
     
@@ -13,5 +18,4 @@ function main {
             exit 0
         }
 }
-
-main
+Main
