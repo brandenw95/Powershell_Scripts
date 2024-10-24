@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Interactive Tutorial Slideshow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/black.css" id="theme">
+    <style>
+        .menu {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .menu button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+        }
+        .next-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu" >
+        <h2>Select a Topic:</h2>
+        <button onclick="jumpToTopic('apps')">Apps</button>
+        <button onclick="jumpToTopic('devices')">Devices</button>
+        <button onclick="jumpToTopic('users')">Users</button>
+        <button onclick="jumpToTopic('groups')">Groups</button>
+    </div>
+
+    <div class="reveal" style="display:none;">
+        <div class="slides">
+            <!-- Apps slides -->
+            <section data-topic="apps" data-background-image="slide 1.png">
+                <section>
+                    <h2>Apps - Slide 1</h2>
+                    <p>Content about Apps.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+                <section>
+                    <h2>Apps - Slide 2</h2>
+                    <p>More content about Apps.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+            </section>
+            <!-- Devices slides -->
+            <section data-topic="devices">
+                <section>
+                    <h2>Devices - Slide 1</h2>
+                    <p>Content about Devices.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+                <section>
+                    <h2>Devices - Slide 2</h2>
+                    <p>More content about Devices.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+            </section>
+            <!-- Users slides -->
+            <section data-topic="users">
+                <section>
+                    <h2>Users - Slide 1</h2>
+                    <p>Content about Users.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+                <section>
+                    <h2>Users - Slide 2</h2>
+                    <p>More content about Users.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+            </section>
+            <!-- Groups slides -->
+            <section data-topic="groups">
+                <section>
+                    <h2>Groups - Slide 1</h2>
+                    <p>Content about Groups.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+                <section>
+                    <h2>Groups - Slide 2</h2>
+                    <p>More content about Groups.</p>
+                    <button class="next-button" onclick="Reveal.next()">Next</button>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="node_modules/reveal.js/dist/reveal.js"></script>
+    <script>
+        function jumpToTopic(topic) {
+            document.querySelector('.menu').style.display = 'none';
+            document.querySelector('.reveal').style.display = 'block';
+            Reveal.initialize();
+            const targetSlide = document.querySelector(`section[data-topic="${topic}"]`);
+            const slideIndex = Array.from(targetSlide.parentNode.children).indexOf(targetSlide);
+            Reveal.slide(slideIndex);
+        }
+    </script>
+</body>
+</html>

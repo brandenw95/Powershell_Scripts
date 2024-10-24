@@ -1,0 +1,1 @@
+.\AuditDeletedEmails.ps1 -StartDate 09/19/2024 -EndDate 10/01/2024 -Mailbox *email*

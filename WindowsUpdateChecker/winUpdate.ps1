@@ -21,6 +21,7 @@ Function WSUSUpdate {
 			$Installer = New-Object -ComObject Microsoft.Update.Installer
 			$Installer.Updates = $SearchResult
 			$Result = $Installer.Install()
+			Write-Output "$Result"
 		}
 	}
 	catch {
